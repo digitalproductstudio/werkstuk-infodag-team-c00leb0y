@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo AR -</title>
+  </head>
+
+  <body>
+    <link
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <h1 class="mdc-typography--headline3">Hand recognizer</h1>
+
+    <div id="liveView" class="videoView">
+      <button id="webcamButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">ENABLE WEBCAM</span>
+      </button>
+    </div>
+    <div class="webcam-wrapper">
+      <div id="ar-layers" class="relative">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas class="output_canvas" id="output_canvas"></canvas>
+      </div>
+    </div>
+    <p id="gesture_output" class="output">
+      <script type="module" src="/src/main.ts"></script>
+    </p>
+  </body>
+</html>
