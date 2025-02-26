@@ -3,6 +3,8 @@ import { displayLandmarks } from "./lib/display";
 import { hasGetUserMedia } from "./lib/utils";
 import "./main.css";
 
+
+
 import {
   FilesetResolver,
   GestureRecognizer,
