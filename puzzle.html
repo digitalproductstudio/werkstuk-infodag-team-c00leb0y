@@ -16,9 +16,7 @@
   <body>
     <div class="grid-container">
       <div class="grid-item-1">
-        <h1 class="mdc-typography--headline3">
-          Hou je duim 5 seconden omhoog om te starten
-        </h1>
+        <h1 class="mdc-typography--headline3">Puzzle</h1>
         <div id="liveView" class="videoView">
           <button id="webcamButton" class="mdc-button mdc-button--raised">
             <span class="mdc-button__ripple"></span>
@@ -27,28 +25,31 @@
         </div>
         <div class="webcam-wrapper">
           <div id="ar-layers" class="relative">
-            <video id="webcam" autoplay playsinline></video>
+            <video id="webcam-puzzle" autoplay playsinline></video>
             <canvas class="output_canvas" id="output_canvas"></canvas>
+            <div class="puzzle-pieces">
+              <div id="piece" class="puzzle-piece-1"></div>
+              <div id="piece" class="puzzle-piece-2"></div>
+              <div id="piece" class="puzzle-piece-3"></div>
+              <div id="piece" class="puzzle-piece-4"></div>
+              <div id="piece" class="puzzle-piece-5"></div>
+              <div id="piece" class="puzzle-piece-6"></div>
+              <div id="piece" class="puzzle-piece-7"></div>
+              <div id="piece" class="puzzle-piece-8"></div>
+              <div id="piece" class="puzzle-piece-9"></div>
+            </div>
           </div>
         </div>
       </div>
       <div class="grid-item-2">
-        <p>Extra Info</p>
-      </div>
-      <div class="grid-item-3">
-        <div class="thumbcounter">
-            <p><span id="thumbCounter">Thumbs-Up Counter: 0</span></p>
-          </div>
-          <div class="thumbtime">
-            <p><span id="thumbTime"></span></p>
-          </div>
-          <div class="nextpage">
-            <p><span id="nextPage">Going to next page: </span></p>
-          </div>
+        <div class="pinchcounter">
+          <p><span id="pinchCounter"></span></p>
+        </div>
       </div>
     </div>
     <p id="gesture_output" class="output">
-      <script type="module" src="/src/home.ts"></script>
+      <script type="module" src="/src/puzzle.ts"></script>
     </p>
   </body>
 </html>
+

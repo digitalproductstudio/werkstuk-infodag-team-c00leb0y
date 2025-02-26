@@ -161,7 +161,7 @@ async function predictWebcam() {
             console.log("Going to the next page");
             thumbsUpStartTime = null;
             nextPageText.style.color = "green";
-            window.location.href = "index.html";
+            window.location.href = "puzzle.html";
           }
         }
       } else {
