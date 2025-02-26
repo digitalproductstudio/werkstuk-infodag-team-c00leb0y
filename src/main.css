@@ -28,7 +28,7 @@ h1 {
 
 #webcam {
   width: auto;
-  height: 100%;
+  height: auto;
   object-fit: cover;
 }
 
@@ -52,3 +52,6 @@ h1 {
   top: 0;
 }
 
+#nextPage {
+  color: red;
+}

@@ -19,6 +19,7 @@ let lastVideoTime = -1;
 let results: GestureRecognizerResult | undefined = undefined;
 
 let SCENE: Scene;
+let thumbsUpStartTime: number | null = null;
 
 // declare DOM elements
 const video = document.querySelector("#webcam") as HTMLVideoElement;
@@ -33,6 +34,8 @@ const btnEnableWebcam = document.querySelector(
   "#webcamButton"
 ) as HTMLButtonElement;
 const ARLayers = document.querySelector("#ar-layers") as HTMLElement;
+
+const nextPageText = document.querySelector("#nextPage");
 
 init();
 
@@ -134,35 +137,64 @@ async function predictWebcam() {
 
     // Log the position of the landmarks
     results.landmarks.forEach((landmarks, handIndex) => {
-      console.log(`Hand ${handIndex + 1}:`);
-      landmarks.forEach((landmark, index) => {
-        console.log(`Landmark ${index}: ${JSON.stringify(landmark)}`);
-      });
+      // Check for thumbs-up gesture
+      const thumbTipY = landmarks[4].y;
+      const indexFingerBaseY = landmarks[5].y;
+      const middleFingerBaseY = landmarks[9].y;
+      const ringFingerBaseY = landmarks[13].y;
+      const pinkyFingerBaseY = landmarks[17].y;
 
-      // Check for pinch gesture
-      const thumbTip = landmarks[4];
-      const indexFingerTip = landmarks[8];
-      const distance = calculateDistance(thumbTip, indexFingerTip);
-      if (distance < 0.05) {
-        // Adjust the threshold as needed
-        console.log("Pinch gesture detected!");
+      if (
+        thumbTipY < indexFingerBaseY &&
+        thumbTipY < middleFingerBaseY &&
+        thumbTipY < ringFingerBaseY &&
+        thumbTipY < pinkyFingerBaseY
+      ) {
+        if (thumbsUpStartTime === null) {
+          thumbsUpStartTime = now;
+        } else {
+          const elapsedTime = (now - thumbsUpStartTime) / 1000;
+          console.log(`Thumbs-up held for ${elapsedTime.toFixed(2)} seconds`);
+          const thumbTime = document.getElementById("thumbTime");
+          thumbTime.innerText = `Thumbs-Up Time: ${Math.round(elapsedTime.toFixed(2))}s`;
+          if (elapsedTime >= 5) {
+            console.log("Going to the next page");
+            thumbsUpStartTime = null;
+            nextPageText.style.color = "green";
+            window.location.href = "index.html";
+          }
+        }
+      } else {
+        thumbsUpStartTime = null; // Reset the timer if the gesture is not held
+        nextPageText.style.color = "red";
       }
     });
 
-    const countingPinches = results.landmarks.reduce((pinchingBool, landmarks) => {
-      const thumbTip = landmarks[4];
-      const indexFingerTip = landmarks[8];
-      const distance = calculateDistance(thumbTip, indexFingerTip);
-      if (distance < 0.05) {
-        return pinchingBool + 1;
+    const countingThumbsUp = results.landmarks.reduce((acc, landmarks) => {
+      const thumbTipY = landmarks[4].y;
+      const indexFingerBaseY = landmarks[5].y;
+      const middleFingerBaseY = landmarks[9].y;
+      const ringFingerBaseY = landmarks[13].y;
+      const pinkyFingerBaseY = landmarks[17].y;
+
+      if (
+        thumbTipY < indexFingerBaseY &&
+        thumbTipY < middleFingerBaseY &&
+        thumbTipY < ringFingerBaseY &&
+        thumbTipY < pinkyFingerBaseY
+      ) {
+        return acc + 1;
       }
-      return pinchingBool;
+      return acc;
     }, 0);
 
-    // Update the pinch counter in the HTML
-    const pinchCounterElement = document.getElementById("pinchCounter");
-    if (pinchCounterElement) {
-      pinchCounterElement.innerText = `Pinch Counter: ${countingPinches}`;
+    // Update the thumbs-up counter in the HTML
+    const thumbCounterElement = document.getElementById("thumbCounter");
+    if (thumbCounterElement) {
+      console.log(`Updating thumbs-up counter: ${countingThumbsUp}`);
+      thumbCounterElement.innerText = `Thumbs-Up Counter: ${countingThumbsUp}`;
+    } else {
+      console.error("Thumbs-up counter element not found");
     }
   }
 
