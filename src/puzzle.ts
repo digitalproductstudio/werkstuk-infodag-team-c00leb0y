@@ -33,6 +33,7 @@ const btnEnableWebcam = document.querySelector(
   "#webcamButton"
 ) as HTMLButtonElement;
 const ARLayers = document.querySelector("#ar-layers") as HTMLElement;
+const handTracker = document.querySelector("#hand-tracker") as HTMLDivElement;
 
 init();
 
@@ -146,18 +147,27 @@ async function predictWebcam() {
       if (distance < 0.05) {
         // Adjust the threshold as needed
         console.log("Pinch gesture detected!");
+
+        // Update the position of the hand-tracker div based on the index finger tip
+        const indexFingerTipX = landmarks[8].x * video.videoWidth;
+        const indexFingerTipY = landmarks[8].y * video.videoHeight;
+        handTracker.style.left = `${indexFingerTipX}px`;
+        handTracker.style.top = `${indexFingerTipY}px`;
       }
     });
 
-    const countingPinches = results.landmarks.reduce((pinchingBool, landmarks) => {
-      const thumbTip = landmarks[4];
-      const indexFingerTip = landmarks[8];
-      const distance = calculateDistance(thumbTip, indexFingerTip);
-      if (distance < 0.05) {
-        return pinchingBool + 1;
-      }
-      return pinchingBool;
-    }, 0);
+    const countingPinches = results.landmarks.reduce(
+      (pinchingBool, landmarks) => {
+        const thumbTip = landmarks[4];
+        const indexFingerTip = landmarks[8];
+        const distance = calculateDistance(thumbTip, indexFingerTip);
+        if (distance < 0.05) {
+          return pinchingBool + 1;
+        }
+        return pinchingBool;
+      },
+      0
+    );
 
     // Update the pinch counter in the HTML
     const pinchCounterElement = document.getElementById("pinchCounter");
@@ -186,3 +196,64 @@ function calculateDistance(
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
 
+function getDivLocation(divId: string) {
+  const div = document.getElementById(divId);
+  if (div) {
+    const rect = div.getBoundingClientRect();
+    return {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+      width: rect.width,
+      height: rect.height,
+    };
+  } else {
+    console.error(`Div with id ${divId} not found`);
+    return null;
+  }
+}
+
+function convertTo3DCoordinates(divId: string, camera: THREE.Camera) {
+  const divLocation = getDivLocation(divId);
+  if (divLocation) {
+    const x =
+      ((divLocation.left + divLocation.width / 2) / window.innerWidth) * 2 - 1;
+    const y =
+      (-(divLocation.top + divLocation.height / 2) / window.innerHeight) * 2 +
+      1;
+    const z = 0.5; // Assuming a fixed depth for simplicity
+
+    const vector = new THREE.Vector3(x, y, z);
+    vector.unproject(camera);
+
+    const dir = vector.sub(camera.position).normalize();
+    const distance = -camera.position.z / dir.z;
+    const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+
+    return { x: pos.x, y: pos.y, z: pos.z };
+  } else {
+    return null;
+  }
+}
+
+// Example usage:
+const divLocation = getDivLocation("piece-1");
+console.log("devlocation");
+if (divLocation) {
+  console.log(
+    `Div location: left ${divLocation.left}, top ${divLocation.top}, width ${divLocation.width}, height ${divLocation.height}`
+  );
+}
+
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+camera.position.set(0, 0, 5); // Set the camera position
+const div3DCoordinates = convertTo3DCoordinates("piece-1", camera);
+if (div3DCoordinates) {
+  console.log(
+    `3D Coordinates: X ${div3DCoordinates.x}, Y ${div3DCoordinates.y}, Z ${div3DCoordinates.z}`
+  );
+}

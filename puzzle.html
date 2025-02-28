@@ -28,16 +28,17 @@
             <video id="webcam-puzzle" autoplay playsinline></video>
             <canvas class="output_canvas" id="output_canvas"></canvas>
             <div class="puzzle-pieces">
-              <div id="piece" class="puzzle-piece-1"></div>
-              <div id="piece" class="puzzle-piece-2"></div>
-              <div id="piece" class="puzzle-piece-3"></div>
-              <div id="piece" class="puzzle-piece-4"></div>
-              <div id="piece" class="puzzle-piece-5"></div>
-              <div id="piece" class="puzzle-piece-6"></div>
-              <div id="piece" class="puzzle-piece-7"></div>
-              <div id="piece" class="puzzle-piece-8"></div>
-              <div id="piece" class="puzzle-piece-9"></div>
+              <div id="piece-1" class="puzzle-piece puzzle-piece-1"></div>
+              <div id="piece-2" class="puzzle-piece puzzle-piece-2"></div>
+              <div id="piece-3" class="puzzle-piece puzzle-piece-3"></div>
+              <div id="piece-4" class="puzzle-piece puzzle-piece-4"></div>
+              <div id="piece-5" class="puzzle-piece puzzle-piece-5"></div>
+              <div id="piece-6" class="puzzle-piece puzzle-piece-6"></div>
+              <div id="piece-7" class="puzzle-piece puzzle-piece-7"></div>
+              <div id="piece-8" class="puzzle-piece puzzle-piece-8"></div>
+              <div id="piece-9" class="puzzle-piece puzzle-piece-9"></div>
             </div>
+            <div id="hand-tracker" class="hand-tracker"></div>
           </div>
         </div>
       </div>
@@ -47,9 +48,7 @@
         </div>
       </div>
     </div>
-    <p id="gesture_output" class="output">
-      <script type="module" src="/src/puzzle.ts"></script>
-    </p>
+    <p id="gesture_output" class="output"></p>
+    <script type="module" src="/src/puzzle.ts"></script>
   </body>
 </html>
-

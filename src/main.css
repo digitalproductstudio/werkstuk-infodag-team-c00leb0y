@@ -60,7 +60,7 @@ h1 {
 
 #webcam-puzzle {
   height: auto;
-  width: 900px;
+  width: auto;
   object-fit: cover;
 }
 
@@ -103,10 +103,20 @@ h1 {
   z-index: 3; /* Ensure it overlays the webcam */
 }
 
-#piece {
+.piece {
   height: 100px;
   width: 100px;
   background-color: rgba(0, 127, 139, 0.5);
 
+}
+
+.hand-tracker {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 127, 139, 0.5);
+  border-radius: 5%;
+  pointer-events: none;
+  z-index: 4; /* Ensure it overlays the webcam */
 }
 

@@ -14,7 +14,7 @@ import {
     if (!results?.landmarks) return;
   
     results.landmarks.forEach((landmarks, index) => {
-  
+
   
       // handedness
       const handedness = results.handedness[index][0];
