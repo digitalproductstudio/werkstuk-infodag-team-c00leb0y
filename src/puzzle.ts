@@ -196,6 +196,7 @@ function calculateDistance(
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
 
+//FUNCTIE OM DE COORDINATEN VAN EEN DIV TE KRIJGEN
 function getDivLocation(divId: string) {
   const div = document.getElementById(divId);
   if (div) {
@@ -212,6 +213,8 @@ function getDivLocation(divId: string) {
   }
 }
 
+
+// VERANDER 2D NAAR 3D COORDINATEN
 function convertTo3DCoordinates(divId: string, camera: THREE.Camera) {
   const divLocation = getDivLocation(divId);
   if (divLocation) {
