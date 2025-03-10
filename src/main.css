@@ -398,7 +398,7 @@ body {
   position: absolute;
   width: 100px;
   height: 100px;
-  background-image: url(../public/developerIcon.jpg);
+  background-image: url(../public/Logo.png);
   background-size: cover;
   border-radius: 5%;
   pointer-events: none;

@@ -22,6 +22,9 @@ let SCENE: Scene;
 let level1Interval: number | undefined;
 let level2Interval: number | undefined;
 let level3Interval: number | undefined;
+let currentLevel = 1; // Track the current level
+
+const sound = new Audio("public/start-13691.mp3");
 
 // declare DOM elements
 const video = document.querySelector("#webcam-puzzle") as HTMLVideoElement;
@@ -290,7 +293,7 @@ function getHandTrackerLocation() {
 
 function checkHandTrackerLocation() {
   const handTrackerLocation = getHandTrackerLocation();
-  if (handTrackerLocation) {
+  if (handTrackerLocation && currentLevel === 1) {
     // Check if the location is within the specified range for level 1
     if (
       handTrackerLocation.left >= 180 &&
@@ -301,6 +304,7 @@ function checkHandTrackerLocation() {
       // Proceed to level 2
       clearInterval(level1Interval); // Stop checking for level 1
       setTimeout(() => {
+        playSound();
         startLevel2();
       }, 500); // Wait for 2 seconds before starting level 2
     }
@@ -311,6 +315,8 @@ function checkHandTrackerLocation() {
 level1Interval = setInterval(checkHandTrackerLocation, 500);
 
 function startLevel2() {
+  console.log("Starting level 2...");
+  currentLevel = 2; // Update the current level
 
   // Make the triangle shape visible
   const triangleShape = document.getElementById("shape-triangle");
@@ -333,7 +339,7 @@ function startLevel2() {
 
 function checkHandTrackerLocationLevel2() {
   const handTrackerLocation = getHandTrackerLocation();
-  if (handTrackerLocation) {
+  if (handTrackerLocation && currentLevel === 2) {
     // Check if the location is within the specified range for level 2
     if (
       handTrackerLocation.left >= 430 &&
@@ -344,6 +350,7 @@ function checkHandTrackerLocationLevel2() {
       // Proceed to level 3
       clearInterval(level2Interval); // Stop checking for level 2
       setTimeout(() => {
+        playSound();
         startLevel3();
       }, 500); // Wait for 2 seconds before starting level 3
     }
@@ -352,6 +359,7 @@ function checkHandTrackerLocationLevel2() {
 
 function startLevel3() {
   console.log("Starting level 3...");
+  currentLevel = 3; // Update the current level
 
   // Make the circle shape visible
   const circleShape = document.getElementById("shape-circle");
@@ -371,7 +379,7 @@ function startLevel3() {
 
 function checkHandTrackerLocationLevel3() {
   const handTrackerLocation = getHandTrackerLocation();
-  if (handTrackerLocation) {
+  if (handTrackerLocation && currentLevel === 3) {
     console.log(
       `Hand tracker location: left ${handTrackerLocation.left}, top ${handTrackerLocation.top}, width ${handTrackerLocation.width}, height ${handTrackerLocation.height}`
     );
@@ -386,9 +394,16 @@ function checkHandTrackerLocationLevel3() {
       console.log("Hand tracker is within the specified range for level 3!");
       clearInterval(level3Interval); // Stop checking for level 3
       console.log("All levels complete!");
-      open('./info.html', '_self');
+      open("./info.html", "_self");
     }
   }
+}
+
+// Function to play the start sound
+function playSound() {
+  sound.play().catch((error) => {
+    console.error("Error playing audio:", error);
+  });
 }
 
 // Check the hand tracker location every 2 seconds for level 1
