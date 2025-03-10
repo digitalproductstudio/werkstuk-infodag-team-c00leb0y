@@ -14,9 +14,10 @@
   </head>
 
   <body>
-    <div class="grid-container">
-      <div class="grid-item-1">
-        <h1 class="mdc-typography--headline3">
+    <div>
+      <div>
+        <h1 class="title_home">
+          Welkom!<br>
           Hou je duim 5 seconden omhoog om te starten
         </h1>
         <div id="liveView" class="videoView">
@@ -25,24 +26,43 @@
             <span class="mdc-button__label">ENABLE WEBCAM</span>
           </button>
         </div>
-        <div class="webcam-wrapper">
-          <div id="ar-layers" class="relative">
-            <video id="webcam" autoplay playsinline></video>
-            <canvas class="output_canvas" id="output_canvas"></canvas>
+        <div class="flex">
+          <div class="webcam-wrapper">
+            <div id="ar-layers" class="relative">
+              <video id="webcam" autoplay playsinline></video>
+              <canvas class="output_canvas" id="output_canvas"></canvas>
+            </div>
+          </div>
+          <div class="instructions">
+            <h2>📌 Instructies</h2>
+            <ul>
+              <li>🔹 Er zijn <strong>3 levels</strong></li>
+              <li>🔹 Elk level heeft een <strong>andere vorm</strong></li>
+              <li>🔹 Sleep de juiste vorm in het juiste gat</li>
+              <li>🔹 Leer meer over de richting <strong>IMD</strong></li>
+              <li>🔹 Na 60 seconden keer je terug naar de home page</li>
+            </ul>
           </div>
         </div>
-      </div>
-      <div class="grid-item-2">
+  
+
+
+
+
+
+
+
+      <div class="grid-item-2 none">
         <p>Extra Info</p>
       </div>
       <div class="grid-item-3">
-        <div class="thumbcounter">
+        <div class="none thumbcounter">
             <p><span id="thumbCounter">Thumbs-Up Counter: 0</span></p>
           </div>
           <div class="thumbtime">
             <p><span id="thumbTime"></span></p>
           </div>
-          <div class="nextpage">
+          <div class="nextpage none">
             <p><span id="nextPage">Going to next page: </span></p>
           </div>
       </div>

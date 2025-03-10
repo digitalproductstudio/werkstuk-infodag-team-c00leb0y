@@ -12,6 +12,20 @@ body {
   overflow-x: hidden;
 }
 
+.title_home{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 3rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.qr_image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10rem;
+}
+
 .none{
   display: none;
 }
