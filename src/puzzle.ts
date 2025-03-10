@@ -19,6 +19,9 @@ let lastVideoTime = -1;
 let results: GestureRecognizerResult | undefined = undefined;
 
 let SCENE: Scene;
+let level1Interval: number | undefined;
+let level2Interval: number | undefined;
+let level3Interval: number | undefined;
 
 // declare DOM elements
 const video = document.querySelector("#webcam-puzzle") as HTMLVideoElement;
@@ -135,9 +138,9 @@ async function predictWebcam() {
 
     // Log the position of the landmarks
     results.landmarks.forEach((landmarks, handIndex) => {
-      console.log(`Hand ${handIndex + 1}:`);
+      // console.log(`Hand ${handIndex + 1}:`);
       landmarks.forEach((landmark, index) => {
-        console.log(`Landmark ${index}: ${JSON.stringify(landmark)}`);
+        //console.log(`Landmark ${index}: ${JSON.stringify(landmark)}`);
       });
 
       // Check for pinch gesture
@@ -145,9 +148,6 @@ async function predictWebcam() {
       const indexFingerTip = landmarks[8];
       const distance = calculateDistance(thumbTip, indexFingerTip);
       if (distance < 0.05) {
-        // Adjust the threshold as needed
-        console.log("Pinch gesture detected!");
-
         // Update the position of the hand-tracker div based on the index finger tip
         const indexFingerTipX = landmarks[8].x * video.videoWidth;
         const indexFingerTipY = landmarks[8].y * video.videoHeight;
@@ -213,7 +213,6 @@ function getDivLocation(divId: string) {
   }
 }
 
-
 // VERANDER 2D NAAR 3D COORDINATEN
 function convertTo3DCoordinates(divId: string, camera: THREE.Camera) {
   const divLocation = getDivLocation(divId);
@@ -240,11 +239,20 @@ function convertTo3DCoordinates(divId: string, camera: THREE.Camera) {
 
 // Example usage:
 const divLocation = getDivLocation("piece-1");
-console.log("devlocation");
 if (divLocation) {
   console.log(
     `Div location: left ${divLocation.left}, top ${divLocation.top}, width ${divLocation.width}, height ${divLocation.height}`
   );
+
+  // Check if the location is within the specified range
+  if (
+    divLocation.left >= 15 &&
+    divLocation.left <= 50 &&
+    divLocation.top >= 15 &&
+    divLocation.top <= 50
+  ) {
+    console.log("Piece-1 is within the specified range!");
+  }
 }
 
 const camera = new THREE.PerspectiveCamera(
@@ -260,3 +268,128 @@ if (div3DCoordinates) {
     `3D Coordinates: X ${div3DCoordinates.x}, Y ${div3DCoordinates.y}, Z ${div3DCoordinates.z}`
   );
 }
+
+// left tussen 15px en 50px
+// top tussen 15px en 50px
+
+function getHandTrackerLocation() {
+  const handTracker = document.getElementById("hand-tracker");
+  if (handTracker) {
+    const rect = handTracker.getBoundingClientRect();
+    return {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+      width: rect.width,
+      height: rect.height,
+    };
+  } else {
+    console.error("Hand tracker element not found");
+    return null;
+  }
+}
+
+function checkHandTrackerLocation() {
+  const handTrackerLocation = getHandTrackerLocation();
+  if (handTrackerLocation) {
+    // Check if the location is within the specified range for level 1
+    if (
+      handTrackerLocation.left >= 180 &&
+      handTrackerLocation.left <= 270 &&
+      handTrackerLocation.top >= 180 &&
+      handTrackerLocation.top <= 350
+    ) {
+      // Proceed to level 2
+      clearInterval(level1Interval); // Stop checking for level 1
+      setTimeout(() => {
+        startLevel2();
+      }, 500); // Wait for 2 seconds before starting level 2
+    }
+  }
+}
+
+// Check the hand tracker location every 2 seconds for level 1
+level1Interval = setInterval(checkHandTrackerLocation, 500);
+
+function startLevel2() {
+
+  // Make the triangle shape visible
+  const triangleShape = document.getElementById("shape-triangle");
+  const squareShape = document.getElementById("shape-square");
+  const shapeChanger = document.getElementById("hand-tracker");
+  if (triangleShape) {
+    triangleShape.style.display = "block";
+    console.log("Triangle shape is now visible");
+    squareShape.style.display = "none";
+    shapeChanger.style.backgroundColor = "red";
+    shapeChanger.style.borderTop = "0";
+    shapeChanger.style.borderLeft = "width / 2";
+    shapeChanger.style.borderRight = "width / 2";
+    shapeChanger.style.borderBottom = "height";
+  }
+
+  // Check the hand tracker location for level 2
+  level2Interval = setInterval(checkHandTrackerLocationLevel2, 2000);
+}
+
+function checkHandTrackerLocationLevel2() {
+  const handTrackerLocation = getHandTrackerLocation();
+  if (handTrackerLocation) {
+    // Check if the location is within the specified range for level 2
+    if (
+      handTrackerLocation.left >= 430 &&
+      handTrackerLocation.left <= 600 &&
+      handTrackerLocation.top >= 400 &&
+      handTrackerLocation.top <= 550
+    ) {
+      // Proceed to level 3
+      clearInterval(level2Interval); // Stop checking for level 2
+      setTimeout(() => {
+        startLevel3();
+      }, 500); // Wait for 2 seconds before starting level 3
+    }
+  }
+}
+
+function startLevel3() {
+  console.log("Starting level 3...");
+
+  // Make the circle shape visible
+  const circleShape = document.getElementById("shape-circle");
+  const triangleShape = document.getElementById("shape-triangle");
+  const shapeChanger = document.getElementById("hand-tracker");
+  if (circleShape) {
+    circleShape.style.display = "block";
+    console.log("Circle shape is now visible");
+    triangleShape.style.display = "none";
+    shapeChanger.style.backgroundColor = "green";
+    shapeChanger.style.borderRadius = "50%";
+  }
+
+  // Check the hand tracker location for level 3
+  level3Interval = setInterval(checkHandTrackerLocationLevel3, 2000);
+}
+
+function checkHandTrackerLocationLevel3() {
+  const handTrackerLocation = getHandTrackerLocation();
+  if (handTrackerLocation) {
+    console.log(
+      `Hand tracker location: left ${handTrackerLocation.left}, top ${handTrackerLocation.top}, width ${handTrackerLocation.width}, height ${handTrackerLocation.height}`
+    );
+
+    // Check if the location is within the specified range for level 3
+    if (
+      handTrackerLocation.left >= 240 &&
+      handTrackerLocation.left <= 360 &&
+      handTrackerLocation.top >= 500 &&
+      handTrackerLocation.top <= 600
+    ) {
+      console.log("Hand tracker is within the specified range for level 3!");
+      clearInterval(level3Interval); // Stop checking for level 3
+      console.log("All levels complete!");
+      open('./info.html', '_self');
+    }
+  }
+}
+
+// Check the hand tracker location every 2 seconds for level 1
+level1Interval = setInterval(checkHandTrackerLocation, 500);

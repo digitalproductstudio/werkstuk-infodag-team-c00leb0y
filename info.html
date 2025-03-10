@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo AR -</title>
+    <link
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="src/main.css" />
+  </head>
+
+  <body class="primary-bg">
+    <div class="container">
+      <div>
+        <h1 class=" home-title">
+          Keuzetraject van Bachelor Grafische en Digitale Media
+          Interactive Media Development <br>
+        </h1>
+        <div id="liveView" class="videoView">
+        </div>
+        <div>
+          <div class="flex flex-col items-center justify-center">
+            <p class="mdc-typography--headline5"><b>Interactive Media Development</b> is het startpunt voor toekomstige innovators, denkers en makers. Deze opleiding biedt je de tools en kennis om innovatieve oplossingen te creëren. Tegelijk verwerf je er ook alle nodige vaardigheden om meeslepende interactieve ervaringen en creatieve digitale producten te ontwerpen.</p>
+            </div>
+  
+            <div class="instructions">
+              <h2>📌 Instructies</h2>
+              <ul>
+                <li>🔹 Er zijn <strong>3 levels</strong></li>
+                <li>🔹 Elk level heeft een <strong>andere vorm</strong></li>
+                <li>🔹 Sleep de juiste vorm in het juiste gat</li>
+                <li>🔹 Leer meer over de richting <strong>IMD</strong></li>
+                <li>🔹 Na 60 seconden keer je terug naar de home page</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="none">
+        <p>Extra Info</p>
+      </div>
+        <div class="none"> 
+        <div class="thumbcounter">
+            <p><span id="thumbCounter">Thumbs-Up Counter: 0</span></p>
+          </div>
+          <div class="thumbtime">
+            <p><span id="thumbTime"></span></p>
+          </div>
+          <div class="nextpage">
+            <p><span id="nextPage">Going to next page: </span></p>
+          </div>
+        </div>
+    </div> 
+    <p id="gesture_output" class="output">
+      <script type="module" src="/src/home.ts"></script>
+    </p>
+  </body>
+</html>

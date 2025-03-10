@@ -24,23 +24,23 @@
           </button>
         </div>
         <div class="webcam-wrapper">
+          <div class="overlay">
+            <div class="vierkant hole" id="hole-square"></div>
+            <div class="cirkel hole" id="hole-circle"></div>
+            <div class="driehoek hole" id="hole-triangle"></div>
+          </div>
           <div id="ar-layers" class="relative">
             <video id="webcam-puzzle" autoplay playsinline></video>
             <canvas class="output_canvas" id="output_canvas"></canvas>
-            <div class="puzzle-pieces">
-              <div id="piece-1" class="puzzle-piece puzzle-piece-1"></div>
-              <div id="piece-2" class="puzzle-piece puzzle-piece-2"></div>
-              <div id="piece-3" class="puzzle-piece puzzle-piece-3"></div>
-              <div id="piece-4" class="puzzle-piece puzzle-piece-4"></div>
-              <div id="piece-5" class="puzzle-piece puzzle-piece-5"></div>
-              <div id="piece-6" class="puzzle-piece puzzle-piece-6"></div>
-              <div id="piece-7" class="puzzle-piece puzzle-piece-7"></div>
-              <div id="piece-8" class="puzzle-piece puzzle-piece-8"></div>
-              <div id="piece-9" class="puzzle-piece puzzle-piece-9"></div>
-            </div>
             <div id="hand-tracker" class="hand-tracker"></div>
           </div>
         </div>
+      </div>
+      <div class="shapes">
+        <div class="square" id="shape-square"></div>
+        <div class="triangle" id="shape-triangle" style="display: none"></div>
+        <div class="circle" id="shape-circle" style="display: none"></div>
+        <!-- New shape for circle, initially hidden -->
       </div>
       <div class="grid-item-2">
         <div class="pinchcounter">
