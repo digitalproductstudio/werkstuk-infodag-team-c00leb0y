@@ -434,3 +434,46 @@ body {
 .info {
   padding: 5rem;
 }
+
+.answer {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 2rem;
+  z-index: 7;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.answer-a {
+  left: 100px;
+  top: 100px;
+}
+.answer-b {
+  left: 300px;
+  top: 100px;
+}
+.answer-c {
+  left: 500px;
+  top: 100px;
+}
+
+.selecting {
+  animation: selectingAnimation 2s linear;
+}
+
+.selected {
+  background-color: white;
+}
+
+@keyframes selectingAnimation {
+  0% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  100% {
+    background-color: white;
+  }
+}
