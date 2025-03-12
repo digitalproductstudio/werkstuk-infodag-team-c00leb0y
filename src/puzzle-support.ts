@@ -7,7 +7,12 @@ import {
   GestureRecognizerResult,
 } from "@mediapipe/tasks-vision";
 import * as THREE from "three";
-import { answerAArray, answerBArray, answerCArray } from "./puzzle";
+import {
+  answerAArray,
+  answerBArray,
+  answerCArray,
+  handleQuizAnswer,
+} from "./puzzle";
 
 // declare variables
 declare type RunningMode = "IMAGE" | "VIDEO";
@@ -193,7 +198,7 @@ export async function predictWebcam() {
         const distance = calculateDistance(thumbTip, indexFingerTip);
         if (distance < 0.05) {
           handTracker.style.backgroundColor = "green";
-        //   console.log("Pinch gesture detected!");
+          //   console.log("Pinch gesture detected!");
           return pinchingBool + 1;
         } else {
           handTracker.style.backgroundColor = "red";
@@ -225,7 +230,7 @@ function calculateDistance(
   point2: { x: number; y: number; z: number }
 ): number {
   const dx = point1.x - point2.x;
-  const dy = point1.y - point2.y;
+  const dy = point2.y - point2.y;
   const dz = point1.z - point2.z;
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
@@ -301,14 +306,16 @@ function isWithinBounds(
 }
 
 // Function to process an answer
-function processAnswer(answer: string) {
-  console.log(`Answer selected: ${answer}`);
+export async function processAnswer(answer: string) {
+  console.log(`this is the answer on line 305 in the support ${answer}`);
   const answerElement = document.querySelector(
     `#answer-${answer.toLowerCase()}`
   );
   if (answerElement) {
     answerElement.classList.add("selected");
   }
+  // Call the function in puzzle.ts to handle the answer
+  handleQuizAnswer(answer);
 }
 
 // Function to reset the colors of the answer elements

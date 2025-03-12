@@ -16,7 +16,7 @@
   <body>
     <div class="grid-container">
       <div class="grid-item-1">
-        <h1 class="mdc-typography--headline3">Puzzle</h1>
+        <h1 class="question-title mdc-typography--headline3">Quiz</h1>
         <div id="liveView" class="videoView">
           <button id="webcamButton" class="mdc-button mdc-button--raised">
             <span class="mdc-button__ripple"></span>
@@ -26,9 +26,9 @@
         <div class="webcam-wrapper">
           <div class="overlay">
             <!-- kan shapes in gezet worden -->
-             <div class="answer answer-a mdc-typography--headline3" id="answer-a"><p>A</p></div>
-             <div class="answer answer-b mdc-typography--headline3" id="answer-b"><p>B</p></div>
-             <div class="answer answer-c mdc-typography--headline3" id="answer-c"><p>C</p></div>
+            <div class="answer answer-a mdc-typography--headline3" id="answer-a"><p>A</p></div>
+            <div class="answer answer-b mdc-typography--headline3" id="answer-b"><p>B</p></div>
+            <div class="answer answer-c mdc-typography--headline3" id="answer-c"><p>C</p></div>
           </div>
           <div id="ar-layers" class="relative">
             <video id="webcam-puzzle" autoplay playsinline></video>
@@ -37,20 +37,19 @@
           </div>
         </div>
       </div>
+      <div class="answer-displayers">
+        <div class="display-answer-a mdc-typography--headline3"></div>
+        <div class="display-answer-b mdc-typography--headline3"></div>
+        <div class="display-answer-c mdc-typography--headline3"></div>
+      </div>
       <div class="shapes">
-
         <!-- New shape for circle, initially hidden -->
       </div>
       <div class="grid-item-2">
-        <div class="pinchcounter">
-        </div>
-      </div>
-      <div id="level-message" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); color: white; padding: 20px; border-radius: 10px; text-align: center; z-index: 1000;">
-        Nice job, now level 2!
+        <div class="pinchcounter"></div>
       </div>
     </div>
     <p id="gesture_output" class="output"></p>
     <script type="module" src="/src/puzzle.ts"></script>
   </body>
 </html>
-

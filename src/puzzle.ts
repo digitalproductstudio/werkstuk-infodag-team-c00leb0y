@@ -9,6 +9,7 @@ import {
   getHandTrackerLocation,
   playSound,
   showLevelMessage,
+  processAnswer
 } from "./puzzle-support";
 
 import {
@@ -69,29 +70,47 @@ interface Question {
 
 const questions: Question[] = [
   {
-    question: "What programming language is this application built with?",
+    question: "Hoeland duurt deze opleiding?",
     options: {
-      A: "JavaScript",
-      B: "TypeScript",
-      C: "Python",
-    },
-    correctAnswer: "B",
-  },
-  {
-    question: "Which of these is NOT a JavaScript framework?",
-    options: {
-      A: "React",
-      B: "Angular",
-      C: "Flask",
+      A: "1 jaar",
+      B: "2 jaar",
+      C: "3 jaar",
     },
     correctAnswer: "C",
   },
   {
-    question: "What does HTML stand for?",
+    question: "Waarvoor staat IMD?",
+    options: {
+      A: "Informative Media Development",
+      B: "Interactive Media Design",
+      C: "Interactive Media Development",
+    },
+    correctAnswer: "C",
+  },
+  {
+    question: "Waarvoor staat HTML?",
     options: {
       A: "Hyper Text Markup Language",
       B: "High Tech Modern Language",
       C: "Hybrid Text Machine Learning",
+    },
+    correctAnswer: "A",
+  },
+  {
+    question: "Hoeveel studiepunten bevat 1 jaar?",
+    options: {
+      A: "50",
+      B: "60",
+      C: "70",
+    },
+    correctAnswer: "B",
+  },
+  {
+    question: "Wat is de postcode van Gent?",
+    options: {
+      A: "9000",
+      B: "7000",
+      C: "6000",
     },
     correctAnswer: "A",
   },
@@ -101,58 +120,34 @@ let currentQuestionIndex = 0;
 let currentQuestion: Question | null = null;
 let answerBeingProcessed = false;
 
+
 // Function to display a question
 function displayQuestion() {
   if (currentQuestionIndex < questions.length) {
     currentQuestion = questions[currentQuestionIndex];
 
-    // Create or get the question display div
-    let questionDiv = document.getElementById("question-display");
-    if (!questionDiv) {
-      questionDiv = document.createElement("div");
-      questionDiv.id = "question-display";
-      questionDiv.style.position = "absolute";
-      questionDiv.style.top = "50px";
-      questionDiv.style.left = "50%";
-      questionDiv.style.transform = "translateX(-50%)";
-      questionDiv.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-      questionDiv.style.color = "white";
-      questionDiv.style.padding = "20px";
-      questionDiv.style.borderRadius = "10px";
-      questionDiv.style.textAlign = "center";
-      questionDiv.style.zIndex = "1000";
-      questionDiv.style.width = "80%";
-      questionDiv.style.maxWidth = "600px";
-      document.body.appendChild(questionDiv);
+    // Set the question title
+    const questionTitle = document.querySelector(".question-title");
+    if (questionTitle) {
+      questionTitle.innerHTML = `Vraag ${currentQuestionIndex + 1}/${
+        questions.length
+      }: ${currentQuestion.question}`;
     }
 
-    // Add the question and options to the div
-    questionDiv.innerHTML = `
-      <h2>Question ${currentQuestionIndex + 1}/${questions.length}</h2>
-      <p>${currentQuestion.question}</p>
-      <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-        <div id="option-A" style="flex: 1; margin: 0 10px; text-align: center; border: 2px solid white; padding: 10px; border-radius: 5px; cursor: pointer;">
-          <strong>A</strong><br>${currentQuestion.options.A}
-        </div>
-        <div id="option-B" style="flex: 1; margin: 0 10px; text-align: center; border: 2px solid white; padding: 10px; border-radius: 5px; cursor: pointer;">
-          <strong>B</strong><br>${currentQuestion.options.B}
-        </div>
-        <div id="option-C" style="flex: 1; margin: 0 10px; text-align: center; border: 2px solid white; padding: 10px; border-radius: 5px; cursor: pointer;">
-          <strong>C</strong><br>${currentQuestion.options.C}
-        </div>
-      </div>
-    `;
+    // Set the possible answers
+    const answerA = document.querySelector(".display-answer-a");
+    const answerB = document.querySelector(".display-answer-b");
+    const answerC = document.querySelector(".display-answer-c");
 
-    // Add event listeners to the options
-    document
-      .getElementById("option-A")
-      ?.addEventListener("click", () => processAnswer("A"));
-    document
-      .getElementById("option-B")
-      ?.addEventListener("click", () => processAnswer("B"));
-    document
-      .getElementById("option-C")
-      ?.addEventListener("click", () => processAnswer("C"));
+    if (answerA) {
+      answerA.innerHTML = `<strong>A</strong><br>${currentQuestion.options.A}`;
+    }
+    if (answerB) {
+      answerB.innerHTML = `<strong>B</strong><br>${currentQuestion.options.B}`;
+    }
+    if (answerC) {
+      answerC.innerHTML = `<strong>C</strong><br>${currentQuestion.options.C}`;
+    }
   } else {
     // All questions answered
     finishQuiz();
@@ -224,9 +219,9 @@ function showFeedback(isCorrect: boolean) {
 // Function to finish the quiz
 function finishQuiz() {
   // Hide question display
-  const questionDiv = document.getElementById("question-display");
-  if (questionDiv) {
-    questionDiv.style.display = "none";
+  const questionTitle = document.querySelector(".question-title");
+  if (questionTitle) {
+    questionTitle.innerHTML = "Quiz Completed!";
   }
 
   // Show completion message
@@ -251,17 +246,12 @@ function finishQuiz() {
   completionDiv.innerHTML = `
     <h2>Quiz Completed!</h2>
     <p>You have answered all questions!</p>
-    <button id="redirect-button" style="padding: 10px 20px; margin-top: 20px; background-color: #007f8b; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Continue to Info Page</button>
+    <button id="redirect-button" class="mdc-button mdc-button--raised" style="padding: 10px 20px; margin-top: 20px; background-color: #007f8b; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Continue to Info Page</button>
   `;
   completionDiv.style.display = "block";
 
   // Add event listener to the button
-  const redirectButton = document.getElementById("redirect-button");
-  if (redirectButton) {
-    redirectButton.addEventListener("click", () => {
-      window.open("./info.html", "_self");
-    });
-  }
+  window.open("./info.html", "_self");
 }
 
 // Function to start the quiz
@@ -279,5 +269,12 @@ function startQuiz() {
   predictWebcam();
 }
 
+// Function to handle quiz answer from puzzle-support
+export function handleQuizAnswer(answer: string) {
+  console.log(`Quiz answer received: ${answer}`);
+  processAnswer(answer);
+}
+
 // Initialize the quiz
 startQuiz();
+
