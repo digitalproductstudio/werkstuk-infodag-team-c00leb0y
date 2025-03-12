@@ -70,7 +70,7 @@ interface Question {
 
 const questions: Question[] = [
   {
-    question: "Hoeland duurt deze opleiding?",
+    question: "Hoelang duurt deze opleiding?",
     options: {
       A: "1 jaar",
       B: "2 jaar",
