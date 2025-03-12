@@ -9,7 +9,7 @@ import {
   getHandTrackerLocation,
   playSound,
   showLevelMessage,
-  processAnswer
+  processAnswer,
 } from "./puzzle-support";
 
 import {
@@ -114,12 +114,56 @@ const questions: Question[] = [
     },
     correctAnswer: "A",
   },
+  {
+    question: "Wat zijn enkele carrièremogelijkheden na het afgestudeerden?",
+    options: {
+      A: "Freelancer",
+      B: "Webdeveloper",
+      C: "Alle bovenstaande",
+    },
+    correctAnswer: "C",
+  },
+  {
+    question: "Uit hoeveel trajecten kan je kiezen in Grafische en Digitale Media?",
+    options: {
+      A: "1",
+      B: "3",
+      C: "4",
+    },
+    correctAnswer: "C",
+  },
+  {
+    question: "Wat is de mediacampus van Artevelde?",
+    options: {
+      A: "Kantineberg",
+      B: "Mariakerke",
+      C: "Leeuwstraat",
+    },
+    correctAnswer: "B",
+  },
+  {
+    question: "Heb je programmeerervaring nodig voor deze opleiding?",
+    options: {
+      A: "Nee",
+      B: "Een beetje",
+      C: "Ja",
+    },
+    correctAnswer: "A",
+  },
+  {
+    question: "Welke vakken komen voor in het eerste jaar van IMD?",
+    options: {
+      A: "Frontend Development, UX/UI Design, Databases",
+      B: "Verpleegkunde, Anatomie, Chirurgie",
+      C: "Boekhouding, Fiscaal Recht, Economie"
+    },
+    correctAnswer: "A"
+  },
 ];
 
 let currentQuestionIndex = 0;
 let currentQuestion: Question | null = null;
 let answerBeingProcessed = false;
-
 
 // Function to display a question
 function displayQuestion() {
@@ -140,13 +184,13 @@ function displayQuestion() {
     const answerC = document.querySelector(".display-answer-c");
 
     if (answerA) {
-      answerA.innerHTML = `<strong>A</strong><br>${currentQuestion.options.A}`;
+      answerA.innerHTML = `<strong>A:</strong><br>${currentQuestion.options.A}`;
     }
     if (answerB) {
-      answerB.innerHTML = `<strong>B</strong><br>${currentQuestion.options.B}`;
+      answerB.innerHTML = `<strong>B:</strong><br>${currentQuestion.options.B}`;
     }
     if (answerC) {
-      answerC.innerHTML = `<strong>C</strong><br>${currentQuestion.options.C}`;
+      answerC.innerHTML = `<strong>C:</strong><br>${currentQuestion.options.C}`;
     }
   } else {
     // All questions answered
@@ -205,7 +249,7 @@ function showFeedback(isCorrect: boolean) {
       : "rgba(255, 0, 0, 0.7)";
   }
 
-  feedbackDiv.innerText = isCorrect ? "Correct!" : "Wrong answer!";
+  feedbackDiv.innerText = isCorrect ? "Correct!" : "Fout probeer opnieuw!";
   feedbackDiv.style.display = "block";
 
   // Hide feedback after 1.5 seconds
@@ -277,4 +321,3 @@ export function handleQuizAnswer(answer: string) {
 
 // Initialize the quiz
 startQuiz();
-

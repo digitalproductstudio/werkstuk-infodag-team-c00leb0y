@@ -14,33 +14,34 @@
   </head>
 
   <body>
-    <div class="grid-container">
-      <div class="grid-item-1">
-        <h1 class="question-title mdc-typography--headline3">Quiz</h1>
+    <div>
+      <div>
+        <h1 class="question-title home-title mdc-typography--headline3">Quiz</h1>
         <div id="liveView" class="videoView">
           <button id="webcamButton" class="mdc-button mdc-button--raised">
-            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__ripple home-title"></span>
             <span class="mdc-button__label">ENABLE WEBCAM</span>
           </button>
         </div>
-        <div class="webcam-wrapper">
-          <div class="overlay">
-            <!-- kan shapes in gezet worden -->
-            <div class="answer answer-a mdc-typography--headline3" id="answer-a"><p>A</p></div>
-            <div class="answer answer-b mdc-typography--headline3" id="answer-b"><p>B</p></div>
-            <div class="answer answer-c mdc-typography--headline3" id="answer-c"><p>C</p></div>
+        <div class="flex justify-center">
+          <div class="webcam-wrapper">
+            <div class="overlay">
+              <!-- kan shapes in gezet worden -->
+              <div class="answer answer-a mdc-typography--headline3" id="answer-a"><p>A</p></div>
+              <div class="answer answer-b mdc-typography--headline3" id="answer-b"><p>B</p></div>
+              <div class="answer answer-c mdc-typography--headline3" id="answer-c"><p>C</p></div>
+            </div>
+            <div id="ar-layers" class="relative">
+              <video id="webcam-puzzle" autoplay playsinline></video>
+              <canvas class="output_canvas" id="output_canvas"></canvas>
+              <div id="hand-tracker" class="hand-tracker"></div>
+            </div>
           </div>
-          <div id="ar-layers" class="relative">
-            <video id="webcam-puzzle" autoplay playsinline></video>
-            <canvas class="output_canvas" id="output_canvas"></canvas>
-            <div id="hand-tracker" class="hand-tracker"></div>
-          </div>
+        <div class="answer-displayers">
+          <div class="display-answer-a mdc-typography--headline3"></div><br>
+          <div class="display-answer-b mdc-typography--headline3"></div><br>
+          <div class="display-answer-c mdc-typography--headline3"></div><br>
         </div>
-      </div>
-      <div class="answer-displayers">
-        <div class="display-answer-a mdc-typography--headline3"></div>
-        <div class="display-answer-b mdc-typography--headline3"></div>
-        <div class="display-answer-c mdc-typography--headline3"></div>
       </div>
       <div class="shapes">
         <!-- New shape for circle, initially hidden -->

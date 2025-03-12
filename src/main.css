@@ -8,8 +8,8 @@ body {
   background-color: bisque;
   --mdc-theme-primary: #007f8b;
   --mdc-theme-on-primary: #f1f3f4;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  /* overflow-y: hidden;
+  overflow-x: hidden; */
 }
 
 .title_home {
@@ -34,6 +34,11 @@ body {
 .flex {
   display: flex;
   gap: 2rem;
+}
+
+.justify-center{
+  justify-content: space-around;
+  align-items: center;  
 }
 
 .instructions {
@@ -477,4 +482,3 @@ body {
     background-color: white;
   }
 }
-
