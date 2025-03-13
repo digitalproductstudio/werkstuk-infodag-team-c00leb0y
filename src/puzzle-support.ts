@@ -225,15 +225,19 @@ export async function predictWebcam() {
   }
 }
 
-function calculateDistance(
+export function calculateDistance(
   point1: { x: number; y: number; z: number },
   point2: { x: number; y: number; z: number }
 ): number {
   const dx = point1.x - point2.x;
-  const dy = point2.y - point2.y;
+  const dy = point1.y - point2.y; // of moet dit point1.y zijn? 
   const dz = point1.z - point2.z;
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  console.log(`Point 1: X: ${point1.x}; Y: ${point1.y}; Z: ${point1.z}`);
+  console.log(`Point 2: X: ${point2.x}; Y: ${point2.y}; Z: ${point2.z}`); 
 }
+
+
 
 // Function to get the hand tracker location
 export function getHandTrackerLocation() {

@@ -10,6 +10,7 @@ import {
   playSound,
   showLevelMessage,
   processAnswer,
+  calculateDistance,
 } from "./puzzle-support";
 
 import {
@@ -203,7 +204,7 @@ function processAnswer(selectedAnswer: string) {
   if (answerBeingProcessed || !currentQuestion) return;
 
   answerBeingProcessed = true;
-  console.log(`Processing answer: ${selectedAnswer}`);
+  // console.log(`Processing answer: ${selectedAnswer}`);
 
   if (selectedAnswer === currentQuestion.correctAnswer) {
     // Correct answer
