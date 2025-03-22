@@ -1,10 +1,4 @@
-import { Scene } from "./ar/Scene";
-import { init, predictWebcam, processAnswer } from "./puzzle-support";
-
-import {
-  GestureRecognizer,
-  GestureRecognizerResult,
-} from "@mediapipe/tasks-vision";
+import { init, predictWebcam } from "./puzzle-support";
 
 // Export the answer arrays
 export const answerAArray = [{ left: [80, 180] }, { top: [80, 180] }];
@@ -13,34 +7,6 @@ export const answerCArray = [{ left: [480, 580] }, { top: [80, 180] }];
 
 // declare variables
 declare type RunningMode = "IMAGE" | "VIDEO";
-let runningMode: RunningMode = "VIDEO";
-let gestureRecognizer: GestureRecognizer | undefined;
-let isWebcamRunning: boolean = false;
-let lastVideoTime = -1;
-let results: GestureRecognizerResult | undefined = undefined;
-
-let SCENE: Scene;
-let level1Interval: number | undefined;
-let level2Interval: number | undefined;
-let level3Interval: number | undefined;
-let currentLevel = 1; // Track the current level
-
-const sound = new Audio("public/start-13691.mp3");
-
-// declare DOM elements
-const video = document.querySelector("#webcam-puzzle") as HTMLVideoElement;
-const canvasElement = document.querySelector(
-  "#output_canvas"
-) as HTMLCanvasElement;
-const canvasCtx = canvasElement.getContext("2d") as CanvasRenderingContext2D;
-const gestureOutput = document.querySelector(
-  "#gesture_output"
-) as HTMLDivElement;
-const btnEnableWebcam = document.querySelector(
-  "#webcamButton"
-) as HTMLButtonElement;
-const ARLayers = document.querySelector("#ar-layers") as HTMLElement;
-const handTracker = document.querySelector("#hand-tracker") as HTMLDivElement;
 
 init();
 
