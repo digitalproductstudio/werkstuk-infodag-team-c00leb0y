@@ -7,17 +7,12 @@ import {
   GestureRecognizerResult,
 } from "@mediapipe/tasks-vision";
 
-import { handleQuizAnswer } from "./puzzle";
-
-const answerAArray: { left: number[]; top: number[] }[] = [
-  { left: [100, 200], top: [100, 200] },
-];
-const answerBArray: { left: number[]; top: number[] }[] = [
-  { left: [300, 400], top: [300, 400] },
-];
-const answerCArray: { left: number[]; top: number[] }[] = [
-  { left: [500, 600], top: [500, 600] },
-];
+import {
+  handleQuizAnswer,
+  answerAArray,
+  answerBArray,
+  answerCArray,
+} from "./puzzle";
 
 // declare variables
 declare type RunningMode = "IMAGE" | "VIDEO";
@@ -167,16 +162,20 @@ export async function predictWebcam() {
 
         // Check if the hand tracker is within the bounds of any answer
         if (isWithinBounds(indexFingerTipX, indexFingerTipY, answerAArray)) {
+          console.log("Within bounds of answer A");
           startAnswerTimer("A");
         } else if (
           isWithinBounds(indexFingerTipX, indexFingerTipY, answerBArray)
         ) {
+          console.log("Within bounds of answer B");
           startAnswerTimer("B");
         } else if (
           isWithinBounds(indexFingerTipX, indexFingerTipY, answerCArray)
         ) {
+          console.log("Within bounds of answer C");
           startAnswerTimer("C");
         } else {
+          console.log("Not within any bounds");
           resetAnswerColors();
           clearAnswerTimers();
         }
@@ -225,14 +224,12 @@ export function calculateDistance(
   point2: { x: number; y: number; z: number }
 ): number {
   const dx = point1.x - point2.x;
-  const dy = point1.y - point2.y; // of moet dit point1.y zijn? 
+  const dy = point1.y - point2.y; // of moet dit point1.y zijn?
   const dz = point1.z - point2.z;
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
   console.log(`Point 1: X: ${point1.x}; Y: ${point1.y}; Z: ${point1.z}`);
-  console.log(`Point 2: X: ${point2.x}; Y: ${point2.y}; Z: ${point2.z}`); 
+  console.log(`Point 2: X: ${point2.x}; Y: ${point2.y}; Z: ${point2.z}`);
 }
-
-
 
 // Function to get the hand tracker location
 export function getHandTrackerLocation() {
@@ -296,6 +293,20 @@ function isWithinBounds(
   y: number,
   bounds: { left: number[]; top: number[] }[]
 ): boolean {
+  // Validate the bounds array
+  if (
+    !bounds ||
+    bounds.length < 2 ||
+    !bounds[0].left ||
+    !bounds[1].top ||
+    !Array.isArray(bounds[0].left) ||
+    !Array.isArray(bounds[1].top)
+  ) {
+    console.error("Invalid bounds array:", bounds);
+    return false;
+  }
+
+  console.log("Bounds array:", bounds);
   return (
     x >= bounds[0].left[0] &&
     x <= bounds[0].left[1] &&
