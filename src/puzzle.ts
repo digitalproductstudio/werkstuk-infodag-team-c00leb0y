@@ -1,24 +1,10 @@
-import { Scene } from "./AR/Scene";
-import { displayLandmarks } from "./lib/display";
-import { hasGetUserMedia } from "./lib/utils";
-import "./main.css";
-import {
-  init,
-  enableWebcam,
-  predictWebcam,
-  getHandTrackerLocation,
-  playSound,
-  showLevelMessage,
-  processAnswer,
-  calculateDistance,
-} from "./puzzle-support";
+import { Scene } from "./ar/Scene";
+import { init, predictWebcam, processAnswer } from "./puzzle-support";
 
 import {
-  FilesetResolver,
   GestureRecognizer,
   GestureRecognizerResult,
 } from "@mediapipe/tasks-vision";
-import * as THREE from "three";
 
 // Export the answer arrays
 export const answerAArray = [{ left: [80, 180] }, { top: [80, 180] }];
@@ -125,7 +111,8 @@ const questions: Question[] = [
     correctAnswer: "C",
   },
   {
-    question: "Uit hoeveel trajecten kan je kiezen in Grafische en Digitale Media?",
+    question:
+      "Uit hoeveel trajecten kan je kiezen in Grafische en Digitale Media?",
     options: {
       A: "1",
       B: "3",
@@ -156,9 +143,9 @@ const questions: Question[] = [
     options: {
       A: "Frontend Development, UX/UI Design, Databases",
       B: "Verpleegkunde, Anatomie, Chirurgie",
-      C: "Boekhouding, Fiscaal Recht, Economie"
+      C: "Boekhouding, Fiscaal Recht, Economie",
     },
-    correctAnswer: "A"
+    correctAnswer: "A",
   },
 ];
 

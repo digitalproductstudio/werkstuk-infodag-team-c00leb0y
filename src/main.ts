@@ -1,4 +1,4 @@
-import { Scene } from "./AR/Scene";
+import { Scene } from "./ar/Scene";
 import { displayLandmarks } from "./lib/display";
 import { hasGetUserMedia } from "./lib/utils";
 import "./main.css";

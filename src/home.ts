@@ -1,14 +1,12 @@
-import { Scene } from "./AR/Scene";
+import { Scene } from "./ar/Scene";
 import { displayLandmarks } from "./lib/display";
 import { hasGetUserMedia } from "./lib/utils";
-import "./main.css";
 
 import {
   FilesetResolver,
   GestureRecognizer,
   GestureRecognizerResult,
 } from "@mediapipe/tasks-vision";
-import * as THREE from "three";
 
 // declare variables
 declare type RunningMode = "IMAGE" | "VIDEO";
@@ -27,15 +25,9 @@ const canvasElement = document.querySelector(
   "#output_canvas"
 ) as HTMLCanvasElement;
 const canvasCtx = canvasElement.getContext("2d") as CanvasRenderingContext2D;
-const gestureOutput = document.querySelector(
-  "#gesture_output"
-) as HTMLDivElement;
-const btnEnableWebcam = document.querySelector(
-  "#webcamButton"
-) as HTMLButtonElement;
 const ARLayers = document.querySelector("#ar-layers") as HTMLElement;
 
-const nextPageText = document.querySelector("#nextPage");
+const nextPageText = document.querySelector("#nextPage") as HTMLElement;
 
 init();
 
@@ -136,7 +128,7 @@ async function predictWebcam() {
     displayLandmarks(canvasCtx, results);
 
     // Log the position of the landmarks
-    results.landmarks.forEach((landmarks, handIndex) => {
+    results.landmarks.forEach((landmarks) => {
       // Check for thumbs-up gesture
       const thumbTipY = landmarks[4].y;
       const indexFingerBaseY = landmarks[5].y;
@@ -156,9 +148,13 @@ async function predictWebcam() {
           const elapsedTime = (now - thumbsUpStartTime) / 1000;
           console.log(`Thumbs-up held for ${elapsedTime.toFixed(2)} seconds`);
           const thumbTime = document.getElementById("thumbTime");
-          thumbTime.innerText = `Thumbs-Up Time: ${Math.round(elapsedTime.toFixed(2))}s`;
+          if (thumbTime) {
+            thumbTime.innerText = `Thumbs-Up Time: ${Math.round(Number(elapsedTime.toFixed(2)))}s`;
+          }
           if (elapsedTime >= 5) {
-            console.log("Going to the next page");
+            if (nextPageText instanceof HTMLElement) {
+              nextPageText.style.color = "green";
+            }
             thumbsUpStartTime = null;
             nextPageText.style.color = "green";
             window.location.href = "puzzle.html";
@@ -208,12 +204,4 @@ async function predictWebcam() {
   }
 }
 
-function calculateDistance(
-  point1: { x: number; y: number; z: number },
-  point2: { x: number; y: number; z: number }
-): number {
-  const dx = point1.x - point2.x;
-  const dy = point1.y - point2.y;
-  const dz = point1.z - point2.z;
-  return Math.sqrt(dx * dx + dy * dy + dz * dz);
-}
+

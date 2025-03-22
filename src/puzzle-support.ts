@@ -1,4 +1,4 @@
-import { Scene } from "./AR/Scene";
+import { Scene } from "./ar/Scene";
 import { displayLandmarks } from "./lib/display";
 import { hasGetUserMedia } from "./lib/utils";
 import {
@@ -6,13 +6,18 @@ import {
   GestureRecognizer,
   GestureRecognizerResult,
 } from "@mediapipe/tasks-vision";
-import * as THREE from "three";
-import {
-  answerAArray,
-  answerBArray,
-  answerCArray,
-  handleQuizAnswer,
-} from "./puzzle";
+
+import { handleQuizAnswer } from "./puzzle";
+
+const answerAArray: { left: number[]; top: number[] }[] = [
+  { left: [100, 200], top: [100, 200] },
+];
+const answerBArray: { left: number[]; top: number[] }[] = [
+  { left: [300, 400], top: [300, 400] },
+];
+const answerCArray: { left: number[]; top: number[] }[] = [
+  { left: [500, 600], top: [500, 600] },
+];
 
 // declare variables
 declare type RunningMode = "IMAGE" | "VIDEO";
@@ -23,7 +28,6 @@ let lastVideoTime = -1;
 let results: GestureRecognizerResult | undefined = undefined;
 
 let SCENE: Scene;
-let currentLevel = 1; // Track the current level
 
 const sound = new Audio("public/start-13691.mp3");
 
@@ -33,12 +37,6 @@ const canvasElement = document.querySelector(
   "#output_canvas"
 ) as HTMLCanvasElement;
 const canvasCtx = canvasElement.getContext("2d") as CanvasRenderingContext2D;
-const gestureOutput = document.querySelector(
-  "#gesture_output"
-) as HTMLDivElement;
-const btnEnableWebcam = document.querySelector(
-  "#webcamButton"
-) as HTMLButtonElement;
 const ARLayers = document.querySelector("#ar-layers") as HTMLElement;
 const handTracker = document.querySelector("#hand-tracker") as HTMLDivElement;
 const answerA = document.querySelector("#answer-a") as HTMLDivElement;
@@ -148,11 +146,8 @@ export async function predictWebcam() {
     displayLandmarks(canvasCtx, results);
 
     // Log the position of the landmarks
-    results.landmarks.forEach((landmarks, handIndex) => {
-      // console.log(`Hand ${handIndex + 1}:`);
-      landmarks.forEach((landmark, index) => {
-        // console.log(`Landmark ${index}: ${JSON.stringify(landmark)}`);
-      });
+    results.landmarks.forEach((landmarks) => {
+      // Process landmarks if needed
 
       // Check for pinch gesture
       const thumbTip = landmarks[4];
